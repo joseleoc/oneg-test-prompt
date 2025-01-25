@@ -8,8 +8,8 @@ export const useCreateStory = () => {
   const createStory = async (formData: StoryForm) => {
     setLoading(true);
     try {
-      const userId = "678591514f065079dcafff8b";
-      const childId = "670569d121d97981e45822a3";
+      const userId = "6778202d3b42eca8e50dad86";
+      const childId = "67785cfa2ed4368e8bd6fd22";
       const storyNarrator = {
         ageCategory: "Elderly",
         gender: "male",
@@ -25,7 +25,7 @@ export const useCreateStory = () => {
       };
       console.log(formData);
       const response = await fetch(
-        "http://localhost:3000/stories/create/test",
+        "https://drzij5bfzs.us-west-2.awsapprunner.com/stories/create/test",
         {
           method: "POST",
           headers: {
