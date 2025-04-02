@@ -29,3 +29,7 @@ form > label {
   justify-content: start;
   gap: 1rem;
 }
+
+.error {
+  color: red;
+}

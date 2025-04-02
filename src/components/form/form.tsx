@@ -2,7 +2,15 @@ import { useForm } from "react-hook-form";
 import "./form.css";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { StoryForm, StorySchema } from "./form.types";
+import {
+  Focus,
+  GeneralPurpose,
+  MainCharacter,
+  StoryCore,
+  StoryForm,
+  StoryScenario,
+  StorySchema,
+} from "./form.types";
 import { useGeneratePrompt } from "./form.functions";
 import { useEffect } from "react";
 
@@ -15,7 +23,7 @@ export default function Form(props: {
     handleSubmit,
     register,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
     setValue,
     getValues,
     trigger,
@@ -30,6 +38,12 @@ export default function Form(props: {
   ]);
 
   const { prompt, generatePrompt } = useGeneratePrompt();
+
+  const handleGeneratePrompt = () => {
+    trigger();
+    if (!isValid) return;
+    generatePrompt(getValues());
+  };
 
   const handleOnSubmit = (data: StoryForm) => {
     if (!isValid) {
@@ -48,129 +62,142 @@ export default function Form(props: {
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)}>
       <h1>Oneg Prompts</h1>
-      <div className="generate-options">
-        <label>
-          <input type="checkbox" {...register("generateAudios")} />
-          Generar audios
-        </label>
-        <label>
-          <input type="checkbox" {...register("generateImages")} />
-          Generar imágenes
-        </label>
-      </div>
 
-      <label>
-        Estilo de la historia:
-        <select {...register("style", { required: true })}>
-          <option value="" disabled>
-            Selecciona un estilo
-          </option>
-          <option value="FICTIONAL">Ficcional</option>
-          <option value="NON_FICTIONAL">No ficcional</option>
-        </select>
-      </label>
-
+      {/* Core Field */}
       <label>
         Core:
-        <select {...register("core", { required: true })}>
+        <select {...register("core")}>
           <option value="" disabled>
             Selecciona el core
           </option>
-          <option value="SOLVING_PROBLEM">Resolver problemas</option>
-          <option value="TEACH_SOMETHING">Enseñar algo</option>
-          <option value="OTHER">Otro</option>
+          {Object.values(StoryCore).map((value, index) => (
+            <option key={index} value={value}>
+              {value}
+            </option>
+          ))}
         </select>
+        {errors.core && <span className="error">{errors.core.message}</span>}
       </label>
 
+      {/* Purpose Field */}
       <label>
-        Proposito de la historia de la historia:
-        <select
-          {...register("purpose", { required: true })}
-          defaultValue={"VALUES"}>
-          <option value="VALUES">Valores</option>
+        Proposito de la historia:
+        <select {...register("purpose")} defaultValue={"VALUES"}>
+          {Object.values(GeneralPurpose).map((value, index) => (
+            <option key={index} value={value}>
+              {value}
+            </option>
+          ))}
         </select>
+        {errors.purpose && (
+          <span className="error">{errors.purpose.message}</span>
+        )}
+      </label>
+
+      {purpose === "OTHER" && (
+        <label>
+          Descripción del propósito:
+          <input {...register("purposeDescription")} />
+          {errors.purposeDescription && (
+            <span className="error">{errors.purposeDescription.message}</span>
+          )}
+        </label>
+      )}
+
+      {/* Focus Field */}
+      <label>
+        Foco de la historia:
+        <select {...register("focus")}>
+          <option value="" disabled>
+            Selecciona el focus:
+          </option>
+          {Object.values(Focus).map((value, index) => (
+            <option key={index} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+        {errors.focus && <span className="error">{errors.focus.message}</span>}
       </label>
 
       {focus === "OTHER" && (
         <label>
           Descripción del focus:
           <input {...register("focusDescription")} />
+          {errors.focusDescription && (
+            <span className="error">{errors.focusDescription.message}</span>
+          )}
         </label>
       )}
 
-      <label>
-        Foco de la historia:
-        <select {...register("focus", { required: true })}>
-          <option value="" disabled>
-            Selecciona el focus:
-          </option>
-          <option value="RESPECT">Respeto</option>
-          <option value="KINDNESS">Amabilidad</option>
-          <option value="HONESTY">Honestidad</option>
-          <option value="OTHER">Otro</option>
-        </select>
-      </label>
-
-      {purpose === "OTHER" && (
-        <label>
-          Descripción del focus:
-          <input {...register("focusDescription")} />
-        </label>
-      )}
-
+      {/* Character Field */}
       <label>
         Personaje:
-        <select {...register("character", { required: true })}>
+        <select {...register("character")}>
           <option value="" disabled>
             Selecciona el personaje
           </option>
-          <option value="GIRL">Chica</option>
-          <option value="BOY">Chico</option>
-          <option value="CAT">Gato</option>
-          <option value="DOG">Perro</option>
-          <option value="OTHER">Otro</option>
+          {Object.values(MainCharacter).map((value, index) => (
+            <option key={index} value={value}>
+              {value}
+            </option>
+          ))}
         </select>
+        {errors.character && (
+          <span className="error">{errors.character.message}</span>
+        )}
       </label>
 
       {character === "OTHER" && (
         <label>
           Descripción del personaje:
-          <input
-            {...register("characterDescription", {
-              required: character === "OTHER",
-            })}
-          />
+          <input {...register("characterDescription")} />
+          {errors.characterDescription && (
+            <span className="error">{errors.characterDescription.message}</span>
+          )}
         </label>
       )}
 
+      {/* Scenario Field */}
       <label>
         Escenario:
-        <select {...register("scenario", { required: true })}>
+        <select {...register("scenario")}>
           <option value="" disabled>
             Selecciona el escenario
           </option>
-          <option value="HOUSE">Casa</option>
-          <option value="SCHOOL">Escuela</option>
-          <option value="RESTAURANT">Restaurante</option>
-          <option value="OTHER">Otro</option>
+          {Object.values(StoryScenario).map((value, index) => (
+            <option key={index} value={value}>
+              {value}
+            </option>
+          ))}
         </select>
+        {errors.scenario && (
+          <span className="error">{errors.scenario.message}</span>
+        )}
       </label>
 
       {scenario === "OTHER" && (
         <label>
           Descripción del escenario:
           <input {...register("scenarioDescription")} />
+          {errors.scenarioDescription && (
+            <span className="error">{errors.scenarioDescription.message}</span>
+          )}
         </label>
       )}
 
+      {/* Final Details */}
       <label>
         Detalles finales de la historia:
         <textarea {...register("finalDetails")} />
+        {errors.finalDetails && (
+          <span className="error">{errors.finalDetails.message}</span>
+        )}
       </label>
 
       <button
         type="button"
-        onClick={() => generatePrompt(getValues())}
+        onClick={() => handleGeneratePrompt()}
         disabled={loading}>
         Generar prompt
       </button>
@@ -178,6 +205,9 @@ export default function Form(props: {
       <label>
         Prompt
         <textarea id="prompt" {...register("prompt")} disabled={!isValid} />
+        {errors.prompt && (
+          <span className="error">{errors.prompt.message}</span>
+        )}
       </label>
 
       <button type="submit" disabled={loading || !isValid}>

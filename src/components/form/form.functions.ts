@@ -46,7 +46,6 @@ export const useGeneratePrompt = () => {
         - The tone should be free from violence or inappropriate themes.  
 
         ### Creative Specifications:  
-        - The story's style should match ${data.style}.  
         - If additional details are provided (${!!data.finalDetails}), integrate them meaningfully: "${data.finalDetails}".  
 
         ### Character Details:  
