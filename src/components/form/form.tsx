@@ -233,6 +233,7 @@ export default function Form(props: {
       </div>
       <div className="col-span-1">
         <textarea
+          onChange={(e) => setLengthPrompt(e.target.value)}
           value={lengthPrompt}
           className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
           placeholder="Length age prompt section"></textarea>
@@ -258,6 +259,7 @@ export default function Form(props: {
       </div>
       <div className="col-span-1">
         <textarea
+          onChange={(e) => setChildAgePrompt(e.target.value)}
           value={childAgePrompt}
           className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
           placeholder="Child age prompt section"></textarea>
@@ -287,6 +289,7 @@ export default function Form(props: {
       </div>
       <div className="col-span-1">
         <textarea
+          onChange={(e) => setCorePrompt(e.target.value)}
           value={corePrompt}
           className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
           placeholder="Core prompt section"></textarea>
@@ -333,6 +336,7 @@ export default function Form(props: {
       </div>
       <div className="col-span-1">
         <textarea
+          onChange={(e) => setPurposePrompt(e.target.value)}
           value={purposePrompt}
           className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
           placeholder="Purpose prompt section"></textarea>
@@ -378,6 +382,7 @@ export default function Form(props: {
       <div className="col-span-1">
         <textarea
           value={focusPrompt}
+          onChange={(e) => setFocusPrompt(e.target.value)}
           className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
           placeholder="Focus prompt section"></textarea>
       </div>
@@ -423,6 +428,7 @@ export default function Form(props: {
       </div>
       <div className="col-span-1">
         <textarea
+          onChange={(e) => setCharacterPrompt(e.target.value)}
           className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
           placeholder="Character prompt section"
           value={characterPrompt}></textarea>
@@ -470,6 +476,7 @@ export default function Form(props: {
       <div className="col-span-1">
         <textarea
           value={scenarioPrompt}
+          onChange={(e) => setScenarioPrompt(e.target.value)}
           className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
           placeholder="Scenario prompt section"></textarea>
       </div>
@@ -492,6 +499,7 @@ export default function Form(props: {
       <div className="col-span-1">
         <textarea
           value={finalDetailsPrompt}
+          onChange={(e) => setFinalDetailsPrompt(e.target.value)}
           className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
           placeholder="Final details prompt section"></textarea>
       </div>
