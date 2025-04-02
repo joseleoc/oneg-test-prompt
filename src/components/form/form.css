@@ -32,4 +32,12 @@ form > label {
 
 .error {
   color: red;
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Optional: highlight invalid fields */
+input:invalid, select:invalid, textarea:invalid {
+  border-color: red;
 }

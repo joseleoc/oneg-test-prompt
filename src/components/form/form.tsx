@@ -29,6 +29,7 @@ export default function Form(props: {
     trigger,
   } = useForm({
     resolver: yupResolver(StorySchema),
+    mode: "onChange",
   });
   const [focus, scenario, purpose, character] = watch([
     "focus",

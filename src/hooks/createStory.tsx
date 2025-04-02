@@ -20,7 +20,6 @@ export const useCreateStory = () => {
         childId,
         storyNarrator,
         mainCharacter: formData.character,
-        storyStyle: formData.style,
         ...formData,
       };
       console.log(formData);
