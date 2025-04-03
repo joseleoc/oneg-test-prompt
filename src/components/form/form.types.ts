@@ -82,6 +82,7 @@ export enum Language {
 export const StorySchema = yup.object().shape({
     // generateAudios: yup.boolean().optional().default(false),
     // generateImages: yup.boolean().optional().default(false),
+    language: yup.string().required("El idioma es obligatorio").oneOf(Object.values(Language), "Selecciona una opción").default(Language.ES),
     age: yup.number().required("El año es obligatorio").min(0, "El año debe ser mayor o igual a 0").typeError("El año debe ser un número"),
     length: yup.number().required("La longitud es obligatoria").min(0, "La longitud debe ser mayor o igual a 0").max(20, "La longitud debe ser menor o igual a 20").typeError("La longitud debe ser un número"),
     focus: yup.string().required().oneOf(Object.values(Focus), "Selecciona una opción"),

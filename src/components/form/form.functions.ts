@@ -4,6 +4,7 @@ export const useGeneratePrompt = () => {
   const [prompt, setPrompt] = useState("");
 
   const generatePrompt = (data: {
+    language: string,
     finalDetailsPrompt: string,
     agePrompt: string,
     lengthPrompt: string,
@@ -15,7 +16,7 @@ export const useGeneratePrompt = () => {
   }) => {
     const newPrompt =
       `
-Generate an engaging, entertaining, and educational story in es.
+Generate an engaging, entertaining, and educational story in ${data.language}.
 
 ${data.finalDetailsPrompt}
 

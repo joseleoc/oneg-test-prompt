@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Focus,
   GeneralPurpose,
+  Language,
   MainCharacter,
   StoryCore,
   StoryForm,
@@ -33,6 +34,7 @@ export default function Form(props: {
     register,
     watch,
     formState: { isValid, errors },
+    getValues,
     setValue,
     trigger,
   } = useForm({
@@ -40,6 +42,7 @@ export default function Form(props: {
     mode: "onChange",
   });
   const [
+    language,
     length,
     age,
     core,
@@ -53,6 +56,7 @@ export default function Form(props: {
     characterDescription,
     finalDetails,
   ] = watch([
+    "language",
     "length",
     "age",
     "core",
@@ -71,8 +75,10 @@ export default function Form(props: {
 
   const handleGeneratePrompt = () => {
     trigger();
+    console.log(getValues());
     if (!isValid) return;
     generatePrompt({
+      language,
       finalDetailsPrompt,
       agePrompt: childAgePrompt,
       lengthPrompt,
@@ -209,6 +215,41 @@ export default function Form(props: {
       <h1 className="col-span-full text-2xl font-bold text-gray-800 mb-2">
         Oneg Prompts
       </h1>
+
+      {/* Language */}
+      <div className="col-span-full space-y-2">
+        <fieldset className="block text-sm font-medium text-gray-700">
+          <legend className="block text-sm font-medium text-gray-700">
+            Idioma:
+          </legend>
+          <div className="mt-2 flex flex-row items-center justify-center gap-8">
+            {Object.values(Language).map((value, index) => (
+              <div
+                className="flex flex-row items-center justify-center gap-4"
+                key={index}>
+                <input
+                  type="radio"
+                  {...register("language")}
+                  value={value}
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <div className="ml-3 text-sm">
+                  <label
+                    htmlFor="language"
+                    className="font-medium text-gray-700">
+                    {value === "es" ? "Español" : "Inglés"}
+                  </label>
+                </div>
+              </div>
+            ))}
+          </div>
+        </fieldset>
+        {errors.language && (
+          <span className="text-red-500 text-xs">
+            {errors.language.message}
+          </span>
+        )}
+      </div>
 
       {/* Length */}
       <div className="col-span-1 space-y-2">
@@ -515,8 +556,8 @@ export default function Form(props: {
         </button>
       </div>
 
-      <div className="col-span-1 text-sm text-gray-600">
-        <span>
+      <div className="col-span-full text-sm text-gray-600 text-start">
+        <span className="text-start">
           El prompt está en formato{" "}
           <a
             href="https://www.markdownguide.org/cheat-sheet/"
