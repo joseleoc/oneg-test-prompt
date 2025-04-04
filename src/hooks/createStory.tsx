@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { StoryForm } from "../components/form/form.types";
 
-// const API_URL = "https://drzij5bfzs.us-west-2.awsapprunner.com/stories/create/test";
-const API_URL = "http://localhost:3000/stories/create/test";
+const API_URL = "https://drzij5bfzs.us-west-2.awsapprunner.com/stories/create/test";
+// const API_URL = "http://localhost:3000/stories/create/test";
 
 export const useCreateStory = () => {
   const [loading, setLoading] = useState(false);
