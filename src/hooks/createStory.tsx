@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { StoryForm } from "../components/form/form.types";
 
+// const API_URL = "https://drzij5bfzs.us-west-2.awsapprunner.com/stories/create/test";
+const API_URL = "http://localhost:3000/stories/create/test";
+
 export const useCreateStory = () => {
   const [loading, setLoading] = useState(false);
   const [story, setStory] = useState<object | null>(null);
+  const [step, setStep] = useState<1 | 2>(1);
 
   const createStory = async (formData: StoryForm) => {
     setLoading(true);
@@ -23,21 +27,19 @@ export const useCreateStory = () => {
         ...formData,
       };
       console.log(formData);
-      const response = await fetch(
-        "https://drzij5bfzs.us-west-2.awsapprunner.com/stories/create/test",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjczODM3MDYsImV4cCI6MTcyOTk3NTcwNn0.p1LcqqcV-eT0BN9tJViPePz5peDrVJ-yiGVH1905X2c",
-          },
-          body: JSON.stringify(body),
-        }
-      );
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjczODM3MDYsImV4cCI6MTcyOTk3NTcwNn0.p1LcqqcV-eT0BN9tJViPePz5peDrVJ-yiGVH1905X2c",
+        },
+        body: JSON.stringify(body),
+      });
       console.log(response);
       const data = await response.json();
       setStory(data);
+      setStep(2);
     } catch (error) {
       console.log(error);
       throw new Error("Error al crear la historia");
@@ -46,5 +48,5 @@ export const useCreateStory = () => {
     }
   };
 
-  return { loading, createStory, story };
+  return { loading, createStory, story, step, setStep };
 };
