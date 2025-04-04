@@ -42,6 +42,7 @@ export default function Form(props: {
     mode: "onChange",
   });
   const [
+    userName,
     language,
     length,
     age,
@@ -56,6 +57,7 @@ export default function Form(props: {
     characterDescription,
     finalDetails,
   ] = watch([
+    "userName",
     "language",
     "length",
     "age",
@@ -99,6 +101,32 @@ export default function Form(props: {
     if (loading) return;
     onSubmit(data);
   };
+
+  useEffect(() => {
+    const defaultUserName = localStorage.getItem("userName");
+    if (defaultUserName) {
+      setValue("userName", defaultUserName);
+    }
+  }, [setValue]);
+
+  useEffect(() => {
+    if (userName) {
+      localStorage.setItem("userName", userName);
+    }
+  }, [userName]);
+
+  useEffect(() => {
+    const defaultLanguage = localStorage.getItem("language");
+    if (defaultLanguage) {
+      setValue("language", defaultLanguage as Language);
+    }
+  }, [setValue]);
+
+  useEffect(() => {
+    if (language) {
+      localStorage.setItem("language", language);
+    }
+  }, [language]);
 
   useEffect(() => {
     setValue("prompt", prompt);
@@ -216,6 +244,22 @@ export default function Form(props: {
         Oneg Prompts
       </h1>
 
+      {/* userName */}
+      <div className="col-span-full space-y-2">
+        <label className="block text-sm font-medium text-gray-700">
+          Nombre de quien crea la historia:
+          <input
+            {...register("userName")}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border"
+            placeholder="Ingresa tu nombre"
+          />
+          {errors.userName && (
+            <span className="text-red-500 text-xs">
+              {errors.userName.message}
+            </span>
+          )}
+        </label>
+      </div>
       {/* Language */}
       <div className="col-span-full space-y-2">
         <fieldset className="block text-sm font-medium text-gray-700">
